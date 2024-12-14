@@ -35,7 +35,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
       width="130px"
       height="130px"
       variant={"elevated"}
-      border={"1px solid"}
+      border={"2px solid"}
       borderColor={"black"}
       bgColor={"green.100"}
     >

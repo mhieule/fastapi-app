@@ -146,22 +146,15 @@ function LivePoints() {
   //   </Container>
   // );
   return (
-    <Container maxW="full">
+    <Container maxW="55%">
       <Heading size="lg" textAlign={{ base: "center", md: "left" }} py={12}>
         Points - Finetuned Fantasy
       </Heading>
-      <Flex
-        width="80vw"
-        height="80vh"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Text></Text>
-        <TeamFormation
-          startingPlayers={startingPlayers}
-          benchPlayers={benchPlayers}
-        />
-      </Flex>
+
+      <TeamFormation
+        startingPlayers={startingPlayers}
+        benchPlayers={benchPlayers}
+      />
     </Container>
   );
 }
