@@ -1,5 +1,5 @@
 // src/routes/_layout/live_points.tsx
-import { Flex, VStack, Text, Heading, Container } from "@chakra-ui/react";
+import { Heading, Container } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { TeamFormation } from "../../components/FPLTeam/TeamFormation";
 

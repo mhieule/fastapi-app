@@ -28,7 +28,7 @@ interface PlayerCardProps {
 
 // Player card component
 const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
-  const { position, club, name, points, opponent } = player;
+  const { name, points, opponent } = player;
 
   return (
     <Card
@@ -76,11 +76,11 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
 };
 
 // Formation component: returns arrays of player arrays by line
-interface FormationConfig {
-  defenders: number;
-  midfielders: number;
-  forwards: number;
-}
+// interface FormationConfig {
+//   defenders: number;
+//   midfielders: number;
+//   forwards: number;
+// }
 
 // This is an example formation generator.
 // Given an array of 11 starting players, we separate them into GK, DEF, MID, FWD lines.

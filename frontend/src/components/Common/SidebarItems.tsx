@@ -1,13 +1,7 @@
 import { Box, Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import {
-  FiBriefcase,
-  FiHome,
-  FiSettings,
-  FiUsers,
-  FiStar,
-} from "react-icons/fi";
+import { FiBriefcase, FiHome, FiSettings, FiUsers } from "react-icons/fi";
 import { FaRankingStar } from "react-icons/fa6";
 import { TbMilitaryRank } from "react-icons/tb";
 
