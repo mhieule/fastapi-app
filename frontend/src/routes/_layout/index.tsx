@@ -17,6 +17,7 @@ import { BiLike, BiShare, BiChat } from "react-icons/bi";
 import { MdSwapHorizontalCircle } from "react-icons/md";
 import { GiProcessor } from "react-icons/gi";
 import { ImStarHalf } from "react-icons/im";
+import FeedImage from "/assets/images/feed.png";
 
 export const Route = createFileRoute("/_layout/")({
   component: Dashboard,
@@ -111,6 +112,43 @@ function Dashboard() {
                 objectFit="cover"
                 src="https://preview.redd.it/top-transfer-out-kane-240k-top-transfer-in-haaland-260k-who-v0-16jezamndcg91.png?width=640&crop=smart&auto=webp&s=75fb1730088c3cc38fb3d9b38042033d1cfe6bcf"
                 alt="Chakra UI"
+                width={500}
+                height={400}
+              />
+            </CardBody>
+            <CardFooter>
+              <Button flex="1" variant="ghost" leftIcon={<BiLike />}>
+                Like
+              </Button>
+              <Button flex="1" variant="ghost" leftIcon={<BiChat />}>
+                Comment
+              </Button>
+              <Button flex="1" variant="ghost" leftIcon={<BiShare />}>
+                Share
+              </Button>
+            </CardFooter>
+          </Card>
+          <Card borderRadius={15}>
+            <CardHeader>
+              <Heading size="md" display="flex" alignItems="center">
+                <MdSwapHorizontalCircle
+                  size={35}
+                  style={{ marginRight: "10px" }}
+                />
+                Feed
+              </Heading>
+            </CardHeader>
+            <CardBody>
+              {/* <Image
+                objectFit="cover"
+                src="https://preview.redd.it/top-transfer-out-kane-240k-top-transfer-in-haaland-260k-who-v0-16jezamndcg91.png?width=640&crop=smart&auto=webp&s=75fb1730088c3cc38fb3d9b38042033d1cfe6bcf"
+                alt="Chakra UI"
+                width={500}
+                height={400}
+              /> */}
+              <Image
+                objectFit="cover"
+                src={FeedImage}
                 width={500}
                 height={400}
               />
