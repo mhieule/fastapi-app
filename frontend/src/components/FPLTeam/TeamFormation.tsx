@@ -13,7 +13,8 @@ import BackgroundImg from "/assets/images/field.jpg";
 import ShirtImg from "/assets/images/MU.webp";
 
 // Types
-interface Player {
+// Export the Player interface
+export interface Player {
   id: number;
   name: string;
   position: "GK" | "DEF" | "MID" | "FWD";
@@ -22,12 +23,13 @@ interface Player {
   opponent: string;
 }
 
+// Export the PlayerCardProps interface if needed, or keep it local
 interface PlayerCardProps {
   player: Player;
 }
 
-// Player card component
-const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
+// Player card component - Export the component
+export const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
   const { name, points, opponent } = player;
 
   return (
@@ -36,8 +38,9 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
       height="130px"
       variant={"elevated"}
       border={"2px solid"}
+      borderRadius={"10px"}
       borderColor={"black"}
-      bgColor={"green.100"}
+      bgColor={"white"}
     >
       <CardBody justifyContent="center" alignItems="center">
         <VStack
@@ -55,7 +58,6 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
           {/* Placeholder for shirt (here just the club name) */}
           {/* Club shirt */}
           <Image src={ShirtImg} borderRadius="lg" height={45} />
-          <Divider borderColor={"black"} />
           {/* Player Name */}
           <Text
             fontSize="sm"
