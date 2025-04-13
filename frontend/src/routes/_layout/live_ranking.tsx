@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { TeamFormation } from "../../components/FPLTeam/TeamFormation";
+import { teamData } from "../../data/mockTeamData";
 
 export const Route = createFileRoute("/_layout/live_ranking")({
   component: LiveRanking,
@@ -78,131 +79,6 @@ const mockManagers: ManagerData[] = [
   },
 ];
 
-// Mock formation data (reuse from previous example)
-const mockTeamData = [
-  {
-    id: 1,
-    name: "Henderson",
-    position: "GK" as const,
-    club: "ARS",
-    points: 2,
-    opponent: "H",
-  },
-  {
-    id: 2,
-    name: "Gvardiol",
-    position: "DEF" as const,
-    club: "MCI",
-    points: null,
-    opponent: "AVL(A)",
-  },
-  {
-    id: 3,
-    name: "Burn",
-    position: "DEF" as const,
-    club: "NEW",
-    points: 6,
-    opponent: "IPS(A)",
-  },
-  {
-    id: 4,
-    name: "Gabriel",
-    position: "DEF" as const,
-    club: "ARS",
-    points: null,
-    opponent: "CRY(A)",
-  },
-  {
-    id: 5,
-    name: "Rogers",
-    position: "DEF" as const,
-    club: "ASV",
-    points: null,
-    opponent: "MCI(H)",
-  },
-  {
-    id: 6,
-    name: "Mbeumo",
-    position: "MID" as const,
-    club: "BRE",
-    points: 5,
-    opponent: "NFO(H)",
-  },
-  {
-    id: 7,
-    name: "Murphy",
-    position: "MID" as const,
-    club: "NEW",
-    points: null,
-    opponent: "IPS(A)",
-  },
-  {
-    id: 8,
-    name: "Salah",
-    position: "MID" as const,
-    club: "LIV",
-    points: 10,
-    opponent: "TOT(A)",
-  },
-  {
-    id: 9,
-    name: "Cunha",
-    position: "FWD" as const,
-    club: "WOL",
-    points: 2,
-    opponent: "LEI(A)",
-  },
-  {
-    id: 10,
-    name: "João Pedro",
-    position: "FWD" as const,
-    club: "BHA",
-    points: null,
-    opponent: "WHU(A)",
-  },
-  {
-    id: 11,
-    name: "Haaland",
-    position: "FWD" as const,
-    club: "MCI",
-    points: 8,
-    opponent: "AVL(A)",
-  },
-  // Bench
-  {
-    id: 12,
-    name: "Flekken",
-    position: "GK" as const,
-    club: "BRE",
-    points: null,
-    opponent: "NFO(H)",
-  },
-  {
-    id: 13,
-    name: "Mazraoui",
-    position: "DEF" as const,
-    club: "MUN",
-    points: null,
-    opponent: "BOU(H)",
-  },
-  {
-    id: 14,
-    name: "Smith Rowe",
-    position: "MID" as const,
-    club: "ARS",
-    points: null,
-    opponent: "SOU(H)",
-  },
-  {
-    id: 15,
-    name: "Lewis",
-    position: "DEF" as const,
-    club: "MCI",
-    points: null,
-    opponent: "AVL(A)",
-  },
-];
-
 function LiveRanking() {
   const [selectedLeague, setSelectedLeague] = useState<string | null>(null);
   const [expandedManagerId, setExpandedManagerId] = useState<string | null>(
@@ -221,8 +97,8 @@ function LiveRanking() {
   // filter managers based on selectedLeague - in a real scenario we would fetch based on league
   const displayedManagers = selectedLeague ? mockManagers : [];
 
-  const startingPlayers = mockTeamData.slice(0, 11);
-  const benchPlayers = mockTeamData.slice(11);
+  const startingPlayers = teamData.slice(0, 11);
+  const benchPlayers = teamData.slice(11);
 
   return (
     <Container maxW="55%">

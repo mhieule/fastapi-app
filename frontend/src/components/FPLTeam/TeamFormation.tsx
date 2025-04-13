@@ -8,6 +8,11 @@ import {
   CardBody,
   Image,
   Divider,
+  Tooltip,
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatHelpText,
 } from "@chakra-ui/react";
 import BackgroundImg from "/assets/images/field.jpg";
 import ShirtImg from "/assets/images/MU.webp";
@@ -21,6 +26,20 @@ export interface Player {
   club: string;
   points: number | null;
   opponent: string;
+  // Extended FPL statistics, all optional for backward compatibility
+  totalGoals?: number;
+  totalAssists?: number;
+  minutesPlayed?: number;
+  cleanSheets?: number;
+  saves?: number;
+  bonusPoints?: number;
+  ictIndex?: number;
+  form?: number;
+  priceChange?: number;
+  selectedByPercent?: number;
+  expectedGoals?: number;
+  expectedAssists?: number;
+  price?: number;
 }
 
 // Export the PlayerCardProps interface if needed, or keep it local
@@ -30,50 +49,68 @@ interface PlayerCardProps {
 
 // Player card component - Export the component
 export const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
-  const { name, points, opponent } = player;
+  const { name, points, opponent, totalGoals, totalAssists, form, price } =
+    player;
+
+  // Create tooltip content with extended statistics
+  const statsTooltip = (
+    <VStack spacing={1} align="left" p={2}>
+      <Text fontWeight="bold">{name}</Text>
+      <Text fontSize="xs">Club: {player.club}</Text>
+      <Text fontSize="xs">Position: {player.position}</Text>
+      {form !== undefined && <Text fontSize="xs">Form: {form}</Text>}
+      {price !== undefined && <Text fontSize="xs">Price: £{price}m</Text>}
+      {totalGoals !== undefined && (
+        <Text fontSize="xs">Goals: {totalGoals}</Text>
+      )}
+      {totalAssists !== undefined && (
+        <Text fontSize="xs">Assists: {totalAssists}</Text>
+      )}
+      {player.minutesPlayed !== undefined && (
+        <Text fontSize="xs">Minutes: {player.minutesPlayed}</Text>
+      )}
+      {player.bonusPoints !== undefined && (
+        <Text fontSize="xs">Bonus: {player.bonusPoints}</Text>
+      )}
+      {player.selectedByPercent !== undefined && (
+        <Text fontSize="xs">Selected by: {player.selectedByPercent}%</Text>
+      )}
+    </VStack>
+  );
 
   return (
-    <Card
-      width="130px"
-      height="130px"
-      variant={"elevated"}
-      border={"2px solid"}
-      borderRadius={"10px"}
-      borderColor={"black"}
-      bgColor={"white"}
-    >
-      <CardBody justifyContent="center" alignItems="center">
-        <VStack
-          // border="1px solid"
-          // borderColor="gray.300"
-          // borderRadius="md"
-          //   p={2}
-          //   spacing={5}
-          //   width="100px"
-          //   height="120px"
-          justifyContent="center"
-          alignItems="center"
-          spacing={1}
-        >
-          {/* Placeholder for shirt (here just the club name) */}
-          {/* Club shirt */}
-          <Image src={ShirtImg} borderRadius="lg" height={45} />
-          {/* Player Name */}
-          <Text
-            fontSize="sm"
-            fontWeight="bold"
-            textAlign="center"
-            color="black"
-          >
-            {name}
-          </Text>
-          {/* Points or Opponent */}
-          <Text fontSize="xs" color="grey">
-            {points !== null ? `${points} pts` : `vs ${opponent}`}
-          </Text>
-        </VStack>
-      </CardBody>
-    </Card>
+    <Tooltip label={statsTooltip} hasArrow placement="top">
+      <Card
+        width="130px"
+        height="130px"
+        variant={"elevated"}
+        border={"2px solid"}
+        borderRadius={"10px"}
+        borderColor={"black"}
+        bgColor={"white"}
+        _hover={{ transform: "scale(1.05)", transition: "0.2s" }}
+      >
+        <CardBody justifyContent="center" alignItems="center">
+          <VStack justifyContent="center" alignItems="center" spacing={1}>
+            {/* Club shirt */}
+            <Image src={ShirtImg} borderRadius="lg" height={45} />
+            {/* Player Name */}
+            <Text
+              fontSize="sm"
+              fontWeight="bold"
+              textAlign="center"
+              color="black"
+            >
+              {name}
+            </Text>
+            {/* Points or Opponent */}
+            <Text fontSize="xs" color="grey">
+              {points !== null ? `${points} pts` : `vs ${opponent}`}
+            </Text>
+          </VStack>
+        </CardBody>
+      </Card>
+    </Tooltip>
   );
 };
 

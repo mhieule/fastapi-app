@@ -20,115 +20,50 @@ import {
   InputRightElement,
   IconButton,
 } from "@chakra-ui/react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import useAuth from "../../hooks/useAuth";
 import { BiLike, BiShare, BiChat, BiSearchAlt } from "react-icons/bi";
 import { MdSwapHorizontalCircle } from "react-icons/md";
 import { GiProcessor } from "react-icons/gi";
 import { ImStarHalf } from "react-icons/im";
 import FeedImage from "/assets/images/feed.png";
-import { PlayerCard, Player } from "../../components/FPLTeam/TeamFormation";
+import { PlayerCard } from "../../components/FPLTeam/TeamFormation";
+import { dashboardPlayers, Player } from "../../data/mockTeamData";
 import { useState } from "react";
 
 export const Route = createFileRoute("/_layout/")({
   component: Dashboard,
 });
 
-// Updated Mock player data to match Player type
-const mockPlayers: Player[] = [
-  {
-    id: 1,
-    name: "Van Dijk",
-    position: "DEF",
-    club: "Liverpool",
-    points: null,
-    opponent: "MCI",
-  },
-  {
-    id: 2,
-    name: "De Bruyne",
-    position: "MID",
-    club: "Man City",
-    points: 90,
-    opponent: "LIV",
-  },
-  {
-    id: 3,
-    name: "Alisson",
-    position: "GK",
-    club: "Liverpool",
-    points: 95,
-    opponent: "MCI",
-  },
-  {
-    id: 4,
-    name: "Saliba",
-    position: "DEF",
-    club: "Arsenal",
-    points: null,
-    opponent: "NEW",
-  },
-  {
-    id: 5,
-    name: "Haaland",
-    position: "FWD",
-    club: "Man City",
-    points: 92,
-    opponent: "LIV",
-  },
-  {
-    id: 6,
-    name: "Salah",
-    position: "FWD",
-    club: "Liverpool",
-    points: 90,
-    opponent: "MCI",
-  },
-  {
-    id: 7,
-    name: "Fernandes",
-    position: "MID",
-    club: "Man United",
-    points: 93,
-    opponent: "CHE",
-  },
-  {
-    id: 8,
-    name: "Palmer",
-    position: "MID",
-    club: "Chelsea",
-    points: 90,
-    opponent: "MUN",
-  },
-  {
-    id: 9,
-    name: "Son",
-    position: "MID",
-    club: "Tottenham",
-    points: 94,
-    opponent: "ARS",
-  },
-  {
-    id: 10,
-    name: "Ødegaard",
-    position: "MID",
-    club: "Arsenal",
-    points: 92,
-    opponent: "TOT",
-  },
-];
-
 function Dashboard() {
   const { user: currentUser } = useAuth();
   const cardImageHeight = 200; // Define height variable
   const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
 
   // Filter players based on search query
-  const filteredPlayers = mockPlayers.filter(
+  const filteredPlayers = dashboardPlayers.filter(
     (player) =>
       searchQuery === "" ||
       player.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Navigation handlers
+  const navigateToTeamOfTheWeek = () => {
+    router.navigate({ to: "/team-of-the-week" });
+  };
+
+  const navigateToOptimizedTeam = () => {
+    router.navigate({ to: "/optimized-team" });
+  };
+
+  const navigateToTransferPlanner = () => {
+    router.navigate({ to: "/transfer-planner" });
+  };
+
+  const navigateToFeed = () => {
+    router.navigate({ to: "/feed" });
+  };
 
   return (
     <>
@@ -139,13 +74,13 @@ function Dashboard() {
           </Text>
           <Text>Welcome back, nice to see you again!</Text>
         </Box>
-        <SimpleGrid
-          spacing={5}
-          // templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
-
-          minChildWidth={250}
-        >
-          <Card borderRadius={15}>
+        <SimpleGrid spacing={5} minChildWidth={250}>
+          <Card
+            borderRadius={15}
+            cursor="pointer"
+            _hover={{ transform: "scale(1.02)", transition: "0.3s" }}
+            onClick={navigateToTeamOfTheWeek}
+          >
             <CardHeader>
               <Heading size="md" display="flex" alignItems="center">
                 <ImStarHalf size={35} style={{ marginRight: "10px" }} /> FPL
@@ -161,19 +96,14 @@ function Dashboard() {
                 height={cardImageHeight}
               />
             </CardBody>
-            <CardFooter>
-              <Button flex="1" variant="ghost" leftIcon={<BiLike />}>
-                Like
-              </Button>
-              <Button flex="1" variant="ghost" leftIcon={<BiChat />}>
-                Comment
-              </Button>
-              <Button flex="1" variant="ghost" leftIcon={<BiShare />}>
-                Share
-              </Button>
-            </CardFooter>
           </Card>
-          <Card borderRadius={15}>
+
+          <Card
+            borderRadius={15}
+            cursor="pointer"
+            _hover={{ transform: "scale(1.02)", transition: "0.3s" }}
+            onClick={navigateToOptimizedTeam}
+          >
             <CardHeader>
               <Heading size="md" display="flex" alignItems="center">
                 <GiProcessor size={35} style={{ marginRight: "10px" }} />
@@ -189,19 +119,14 @@ function Dashboard() {
                 height={cardImageHeight}
               />
             </CardBody>
-            <CardFooter>
-              <Button flex="1" variant="ghost" leftIcon={<BiLike />}>
-                Like
-              </Button>
-              <Button flex="1" variant="ghost" leftIcon={<BiChat />}>
-                Comment
-              </Button>
-              <Button flex="1" variant="ghost" leftIcon={<BiShare />}>
-                Share
-              </Button>
-            </CardFooter>
           </Card>
-          <Card borderRadius={15}>
+
+          <Card
+            borderRadius={15}
+            cursor="pointer"
+            _hover={{ transform: "scale(1.02)", transition: "0.3s" }}
+            onClick={navigateToTransferPlanner}
+          >
             <CardHeader>
               <Heading size="md" display="flex" alignItems="center">
                 <MdSwapHorizontalCircle
@@ -220,19 +145,14 @@ function Dashboard() {
                 height={cardImageHeight}
               />
             </CardBody>
-            <CardFooter>
-              <Button flex="1" variant="ghost" leftIcon={<BiLike />}>
-                Like
-              </Button>
-              <Button flex="1" variant="ghost" leftIcon={<BiChat />}>
-                Comment
-              </Button>
-              <Button flex="1" variant="ghost" leftIcon={<BiShare />}>
-                Share
-              </Button>
-            </CardFooter>
           </Card>
-          <Card borderRadius={15}>
+
+          <Card
+            borderRadius={15}
+            cursor="pointer"
+            _hover={{ transform: "scale(1.02)", transition: "0.3s" }}
+            onClick={navigateToFeed}
+          >
             <CardHeader>
               <Heading size="md" display="flex" alignItems="center">
                 <MdSwapHorizontalCircle
@@ -243,13 +163,6 @@ function Dashboard() {
               </Heading>
             </CardHeader>
             <CardBody>
-              {/* <Image
-                objectFit="cover"
-                src="https://preview.redd.it/top-transfer-out-kane-240k-top-transfer-in-haaland-260k-who-v0-16jezamndcg91.png?width=640&crop=smart&auto=webp&s=75fb1730088c3cc38fb3d9b38042033d1cfe6bcf"
-                alt="Chakra UI"
-                width={500}
-                height={400}
-              /> */}
               <Image
                 objectFit="cover"
                 src={FeedImage}
@@ -257,17 +170,6 @@ function Dashboard() {
                 height={cardImageHeight}
               />
             </CardBody>
-            <CardFooter>
-              <Button flex="1" variant="ghost" leftIcon={<BiLike />}>
-                Like
-              </Button>
-              <Button flex="1" variant="ghost" leftIcon={<BiChat />}>
-                Comment
-              </Button>
-              <Button flex="1" variant="ghost" leftIcon={<BiShare />}>
-                Share
-              </Button>
-            </CardFooter>
           </Card>
         </SimpleGrid>
 
