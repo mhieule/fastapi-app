@@ -22,7 +22,6 @@ import { Route as LayoutTeamOfTheWeekImport } from './routes/_layout/team-of-the
 import { Route as LayoutSettingsImport } from './routes/_layout/settings'
 import { Route as LayoutOptimizedTeamImport } from './routes/_layout/optimized-team'
 import { Route as LayoutLiverankingImport } from './routes/_layout/live_ranking'
-import { Route as LayoutLivepointsImport } from './routes/_layout/live_points'
 import { Route as LayoutItemsImport } from './routes/_layout/items'
 import { Route as LayoutFeedImport } from './routes/_layout/feed'
 import { Route as LayoutAdminImport } from './routes/_layout/admin'
@@ -84,11 +83,6 @@ const LayoutLiverankingRoute = LayoutLiverankingImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutLivepointsRoute = LayoutLivepointsImport.update({
-  path: '/live_points',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
 const LayoutItemsRoute = LayoutItemsImport.update({
   path: '/items',
   getParentRoute: () => LayoutRoute,
@@ -140,10 +134,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutItemsImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/live_points': {
-      preLoaderRoute: typeof LayoutLivepointsImport
-      parentRoute: typeof LayoutImport
-    }
     '/_layout/live_ranking': {
       preLoaderRoute: typeof LayoutLiverankingImport
       parentRoute: typeof LayoutImport
@@ -178,7 +168,6 @@ export const routeTree = rootRoute.addChildren([
     LayoutAdminRoute,
     LayoutFeedRoute,
     LayoutItemsRoute,
-    LayoutLivepointsRoute,
     LayoutLiverankingRoute,
     LayoutOptimizedTeamRoute,
     LayoutSettingsRoute,

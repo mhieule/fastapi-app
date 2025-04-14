@@ -19,6 +19,7 @@ export const Route = createFileRoute("/_layout/live_ranking")({
 });
 // Mock data for leagues
 const leagues = [
+  { id: "mypoints", name: "My Points" },
   { id: "league1", name: "#nhabaolon" },
   { id: "league2", name: "Some Other League" },
   { id: "league3", name: "Another League" },
@@ -94,11 +95,59 @@ function LiveRanking() {
     setExpandedManagerId(expandedManagerId === managerId ? null : managerId);
   };
 
-  // filter managers based on selectedLeague - in a real scenario we would fetch based on league
-  const displayedManagers = selectedLeague ? mockManagers : [];
-
+  // Get starting players and bench players
   const startingPlayers = teamData.slice(0, 11);
   const benchPlayers = teamData.slice(11);
+
+  // Display personal points view if 'mypoints' is selected
+  if (selectedLeague === "mypoints") {
+    return (
+      <Container maxW="55%">
+        <VStack spacing={4} align="stretch" p={4} bg="gray.800" minH="100vh">
+          {/* Header */}
+          <Box>
+            <Heading color="white">Gameweek 16</Heading>
+          </Box>
+
+          {/* League selection */}
+          <Box>
+            <Select
+              placeholder="Select league"
+              bg="black"
+              onChange={handleLeagueChange}
+              value={selectedLeague ?? ""}
+            >
+              {leagues.map((league) => (
+                <option key={league.id} value={league.id}>
+                  {league.name}
+                </option>
+              ))}
+            </Select>
+          </Box>
+
+          {/* Personal points view */}
+          <Box mt={6}>
+            <Heading
+              size="lg"
+              textAlign={{ base: "center", md: "left" }}
+              mb={6}
+              color="white"
+            >
+              Points - Finetuned Fantasy
+            </Heading>
+
+            <TeamFormation
+              startingPlayers={startingPlayers}
+              benchPlayers={benchPlayers}
+            />
+          </Box>
+        </VStack>
+      </Container>
+    );
+  }
+
+  // filter managers based on selectedLeague - in a real scenario we would fetch based on league
+  const displayedManagers = selectedLeague ? mockManagers : [];
 
   return (
     <Container maxW="55%">
