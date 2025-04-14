@@ -165,52 +165,78 @@ function TeamOfTheWeek() {
               </HStack>
             </Box>
             <Box p={4}>
-              <Text fontSize="3xl" fontWeight="bold" mb={2}>
-                {totalGoals}
-              </Text>
-              <HStack justifyContent="space-between" mb={1}>
-                <Text fontSize="sm">Goals per position:</Text>
-              </HStack>
-              {["DEF", "MID", "FWD"].map((pos) => {
-                const posGoals = teamOfTheWeekData
-                  .filter((p) => p.position === pos)
-                  .reduce((sum, p) => sum + p.totalGoals, 0);
-                const maxGoals = Math.max(
-                  ...["DEF", "MID", "FWD"].map((p) =>
-                    teamOfTheWeekData
-                      .filter((player) => player.position === p)
-                      .reduce((sum, player) => sum + player.totalGoals, 0)
-                  )
-                );
-                return (
-                  <Box key={pos} mb={1}>
-                    <HStack justifyContent="space-between" mb={1}>
-                      <Badge
-                        colorScheme={
-                          pos === "DEF"
-                            ? "blue"
-                            : pos === "MID"
-                              ? "green"
-                              : "red"
-                        }
-                      >
-                        {pos}
-                      </Badge>
-                      <Text fontSize="sm" fontWeight="bold">
-                        {posGoals}
-                      </Text>
-                    </HStack>
-                    <Progress
-                      value={(posGoals / maxGoals) * 100}
-                      colorScheme={
-                        pos === "DEF" ? "blue" : pos === "MID" ? "green" : "red"
-                      }
-                      size="xs"
-                      borderRadius="full"
-                    />
-                  </Box>
-                );
-              })}
+              <Flex>
+                {/* Left side - Number in container */}
+                <Flex
+                  direction="column"
+                  justify="center"
+                  align="center"
+                  borderRadius="lg"
+                  bg="green.50"
+                  p={3}
+                  mr={4}
+                  h="100%"
+                  minW="100px"
+                >
+                  <Text fontSize="3xl" fontWeight="bold" color="green.500">
+                    {totalGoals}
+                  </Text>
+                  <Text fontSize="xs" color="gray.500">
+                    GOALS
+                  </Text>
+                </Flex>
+
+                {/* Right side - Goals per position */}
+                <Box flex="1">
+                  <Text fontSize="sm" fontWeight="medium" mb={2}>
+                    Goals per position:
+                  </Text>
+                  {["DEF", "MID", "FWD"].map((pos) => {
+                    const posGoals = teamOfTheWeekData
+                      .filter((p) => p.position === pos)
+                      .reduce((sum, p) => sum + p.totalGoals, 0);
+                    const maxGoals = Math.max(
+                      ...["DEF", "MID", "FWD"].map((p) =>
+                        teamOfTheWeekData
+                          .filter((player) => player.position === p)
+                          .reduce((sum, player) => sum + player.totalGoals, 0)
+                      )
+                    );
+                    return (
+                      <Box key={pos} mb={1}>
+                        <HStack justifyContent="space-between" mb={0.5}>
+                          <Badge
+                            colorScheme={
+                              pos === "DEF"
+                                ? "blue"
+                                : pos === "MID"
+                                  ? "green"
+                                  : "red"
+                            }
+                          >
+                            {pos}
+                          </Badge>
+                          <Text fontSize="sm" fontWeight="bold">
+                            {posGoals}
+                          </Text>
+                        </HStack>
+                        <Progress
+                          value={(posGoals / maxGoals) * 100}
+                          colorScheme={
+                            pos === "DEF"
+                              ? "blue"
+                              : pos === "MID"
+                                ? "green"
+                                : "red"
+                          }
+                          size="xs"
+                          borderRadius="full"
+                        />
+                      </Box>
+                    );
+                  })}
+                </Box>
+              </Flex>
             </Box>
           </CardBody>
         </Card>
@@ -226,44 +252,75 @@ function TeamOfTheWeek() {
               </HStack>
             </Box>
             <Box p={4}>
-              <Text fontSize="3xl" fontWeight="bold" mb={2}>
-                {totalAssists}
-              </Text>
-              <Box mb={2}>
-                <HStack justifyContent="space-between" mb={1}>
-                  <Text fontSize="sm">Top assisters:</Text>
-                </HStack>
-                {teamOfTheWeekData
-                  .sort((a, b) => b.totalAssists - a.totalAssists)
-                  .slice(0, 3)
-                  .map((player) => (
-                    <HStack
-                      key={player.id}
-                      justifyContent="space-between"
-                      mb={1}
-                    >
-                      <HStack>
-                        <Badge
-                          colorScheme={
-                            player.position === "GK"
-                              ? "purple"
-                              : player.position === "DEF"
-                                ? "blue"
-                                : player.position === "MID"
-                                  ? "green"
-                                  : "red"
+              <Flex>
+                {/* Left side - Number in container */}
+                <Flex
+                  direction="column"
+                  justify="center"
+                  align="center"
+                  borderRadius="lg"
+                  bg="purple.50"
+                  p={3}
+                  mr={4}
+                  h="100%"
+                  minW="100px"
+                >
+                  <Text fontSize="3xl" fontWeight="bold" color="purple.500">
+                    {totalAssists}
+                  </Text>
+                  <Text fontSize="xs" color="gray.500">
+                    ASSISTS
+                  </Text>
+                </Flex>
+
+                {/* Right side - Top assisters */}
+                <Box flex="1">
+                  <Text fontSize="sm" fontWeight="medium" mb={2}>
+                    Top assisters:
+                  </Text>
+                  {teamOfTheWeekData
+                    .sort((a, b) => b.totalAssists - a.totalAssists)
+                    .slice(0, 3)
+                    .map((player) => (
+                      <Box key={player.id} mb={1.5}>
+                        <HStack justifyContent="space-between">
+                          <HStack>
+                            <Badge
+                              colorScheme={
+                                player.position === "GK"
+                                  ? "purple"
+                                  : player.position === "DEF"
+                                    ? "blue"
+                                    : player.position === "MID"
+                                      ? "green"
+                                      : "red"
+                              }
+                              size="sm"
+                            >
+                              {player.position}
+                            </Badge>
+                            <Text fontSize="sm" fontWeight="medium">
+                              {player.name}
+                            </Text>
+                          </HStack>
+                          <Text fontSize="sm" fontWeight="bold">
+                            {player.totalAssists}
+                          </Text>
+                        </HStack>
+                        <Progress
+                          value={
+                            (player.totalAssists / mostAssists.totalAssists) *
+                            100
                           }
-                        >
-                          {player.position}
-                        </Badge>
-                        <Text fontSize="sm">{player.name}</Text>
-                      </HStack>
-                      <Text fontSize="sm" fontWeight="bold">
-                        {player.totalAssists}
-                      </Text>
-                    </HStack>
-                  ))}
-              </Box>
+                          colorScheme="purple"
+                          size="xs"
+                          borderRadius="full"
+                          mt={0.5}
+                        />
+                      </Box>
+                    ))}
+                </Box>
+              </Flex>
             </Box>
           </CardBody>
         </Card>
