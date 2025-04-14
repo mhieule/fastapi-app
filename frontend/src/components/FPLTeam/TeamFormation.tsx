@@ -8,70 +8,315 @@ import {
   CardBody,
   Image,
   Divider,
+  Tooltip,
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatHelpText,
+  Flex,
+  Badge,
+  Progress,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 import BackgroundImg from "/assets/images/field.jpg";
 import ShirtImg from "/assets/images/MU.webp";
 
 // Types
-interface Player {
+// Export the Player interface
+export interface Player {
   id: number;
   name: string;
   position: "GK" | "DEF" | "MID" | "FWD";
   club: string;
   points: number | null;
   opponent: string;
+  // Extended FPL statistics, all optional for backward compatibility
+  totalGoals?: number;
+  totalAssists?: number;
+  minutesPlayed?: number;
+  cleanSheets?: number;
+  saves?: number;
+  bonusPoints?: number;
+  ictIndex?: number;
+  form?: number;
+  priceChange?: number;
+  selectedByPercent?: number;
+  expectedGoals?: number;
+  expectedAssists?: number;
+  price?: number;
 }
 
+// Export the PlayerCardProps interface if needed, or keep it local
 interface PlayerCardProps {
   player: Player;
 }
 
-// Player card component
-const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
-  const { name, points, opponent } = player;
+// Get color based on form rating
+const getFormColor = (form?: number): string => {
+  if (!form) return "gray.400";
+  if (form >= 8) return "green.400";
+  if (form >= 6) return "green.300";
+  if (form >= 4) return "yellow.400";
+  if (form >= 2) return "orange.400";
+  return "red.400";
+};
+
+// Get color based on price change
+const getPriceChangeColor = (priceChange?: number): string => {
+  if (!priceChange) return "gray.400";
+  return priceChange > 0 ? "green.400" : "red.400";
+};
+
+// Player card component - Export the component
+export const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
+  // Create tooltip content with extended statistics
+  const statsTooltip = (
+    <Box
+      p={3}
+      maxW="200px"
+      bg="#1a202c"
+      color="white"
+      borderRadius="md"
+      boxShadow="none"
+      overflow="hidden"
+    >
+      {/* Header */}
+      <Flex justify="space-between" align="center" mb={2}>
+        <Box>
+          <Text fontWeight="bold" fontSize="md">
+            {player.name}
+          </Text>
+          <Flex align="center" mt={1}>
+            <Badge
+              colorScheme={
+                player.position === "GK"
+                  ? "purple"
+                  : player.position === "DEF"
+                    ? "blue"
+                    : player.position === "MID"
+                      ? "green"
+                      : "red"
+              }
+              mr={2}
+            >
+              {player.position}
+            </Badge>
+            <Text fontSize="xs">{player.club}</Text>
+          </Flex>
+        </Box>
+        <Box textAlign="right">
+          {player.price !== undefined && (
+            <Text fontSize="lg" fontWeight="bold" color="#2ecc71">
+              £{player.price}m
+            </Text>
+          )}
+          {player.priceChange !== undefined && (
+            <Text fontSize="xs" color={getPriceChangeColor(player.priceChange)}>
+              {player.priceChange > 0
+                ? `↑ £${player.priceChange}m`
+                : `↓ £${Math.abs(player.priceChange)}m`}
+            </Text>
+          )}
+        </Box>
+      </Flex>
+
+      <Divider my={2} borderColor="gray.600" />
+
+      {/* Key stats */}
+      <Grid templateColumns="repeat(2, 1fr)" gap={2} mb={3}>
+        {player.form !== undefined && (
+          <GridItem>
+            <Text fontSize="xs" color="gray.400">
+              Form
+            </Text>
+            <Flex align="center">
+              <Text fontWeight="bold" color={getFormColor(player.form)} mr={1}>
+                {player.form}
+              </Text>
+              <Progress
+                value={player.form * 10}
+                size="xs"
+                colorScheme={
+                  player.form >= 6
+                    ? "green"
+                    : player.form >= 4
+                      ? "yellow"
+                      : "red"
+                }
+                w="60px"
+                borderRadius="full"
+              />
+            </Flex>
+          </GridItem>
+        )}
+
+        {player.selectedByPercent !== undefined && (
+          <GridItem>
+            <Text fontSize="xs" color="gray.400">
+              Selected
+            </Text>
+            <Text fontWeight="bold">{player.selectedByPercent}%</Text>
+          </GridItem>
+        )}
+
+        {player.minutesPlayed !== undefined && (
+          <GridItem>
+            <Text fontSize="xs" color="gray.400">
+              Minutes
+            </Text>
+            <Text fontWeight="bold">{player.minutesPlayed}</Text>
+          </GridItem>
+        )}
+
+        {player.bonusPoints !== undefined && (
+          <GridItem>
+            <Text fontSize="xs" color="gray.400">
+              Bonus
+            </Text>
+            <Text fontWeight="bold">{player.bonusPoints}</Text>
+          </GridItem>
+        )}
+      </Grid>
+
+      {/* Performance */}
+      <Flex justify="space-between" bg="#2D3748" p={2} borderRadius="md" mb={2}>
+        <Box textAlign="center">
+          <Text fontSize="xs" color="gray.400">
+            Goals
+          </Text>
+          <Text fontWeight="bold" fontSize="md" color="#63B3ED">
+            {player.totalGoals || 0}
+          </Text>
+        </Box>
+        <Box textAlign="center">
+          <Text fontSize="xs" color="gray.400">
+            Assists
+          </Text>
+          <Text fontWeight="bold" fontSize="md" color="#63B3ED">
+            {player.totalAssists || 0}
+          </Text>
+        </Box>
+        {player.cleanSheets !== undefined && (
+          <Box textAlign="center">
+            <Text fontSize="xs" color="gray.400">
+              Clean Sh.
+            </Text>
+            <Text fontWeight="bold" fontSize="md" color="#63B3ED">
+              {player.cleanSheets}
+            </Text>
+          </Box>
+        )}
+        {player.saves !== undefined && player.saves > 0 && (
+          <Box textAlign="center">
+            <Text fontSize="xs" color="gray.400">
+              Saves
+            </Text>
+            <Text fontWeight="bold" fontSize="md" color="#63B3ED">
+              {player.saves}
+            </Text>
+          </Box>
+        )}
+      </Flex>
+
+      {/* Expected stats */}
+      {(player.expectedGoals !== undefined ||
+        player.expectedAssists !== undefined) && (
+        <Box bg="#2D3748" p={2} borderRadius="md">
+          <Text fontSize="xs" mb={1} color="gray.400">
+            Expected Stats
+          </Text>
+          <Flex justify="space-between">
+            {player.expectedGoals !== undefined && (
+              <Box textAlign="center">
+                <Text fontSize="xs" color="gray.400">
+                  xG
+                </Text>
+                <Text fontWeight="bold" fontSize="sm" color="#4FD1C5">
+                  {player.expectedGoals.toFixed(1)}
+                </Text>
+              </Box>
+            )}
+            {player.expectedAssists !== undefined && (
+              <Box textAlign="center">
+                <Text fontSize="xs" color="gray.400">
+                  xA
+                </Text>
+                <Text fontWeight="bold" fontSize="sm" color="#4FD1C5">
+                  {player.expectedAssists.toFixed(1)}
+                </Text>
+              </Box>
+            )}
+            {player.ictIndex !== undefined && (
+              <Box textAlign="center">
+                <Text fontSize="xs" color="gray.400">
+                  ICT
+                </Text>
+                <Text fontWeight="bold" fontSize="sm" color="#4FD1C5">
+                  {player.ictIndex.toFixed(1)}
+                </Text>
+              </Box>
+            )}
+          </Flex>
+        </Box>
+      )}
+    </Box>
+  );
 
   return (
-    <Card
-      width="130px"
-      height="130px"
-      variant={"elevated"}
-      border={"2px solid"}
-      borderColor={"black"}
-      bgColor={"green.100"}
+    <Tooltip
+      label={statsTooltip}
+      hasArrow
+      placement="top"
+      openDelay={300}
+      bg="transparent"
+      boxShadow="none"
+      padding={0}
+      borderRadius={0}
+      gutter={10}
+      arrowSize={8}
+      arrowShadowColor="transparent"
+      css={{
+        "--popper-arrow-bg": "#1a202c", // Match the main bg color
+        ".chakra-tooltip__arrow": {
+          background: "#1a202c !important",
+          boxShadow: "none !important",
+        },
+      }}
     >
-      <CardBody justifyContent="center" alignItems="center">
-        <VStack
-          // border="1px solid"
-          // borderColor="gray.300"
-          // borderRadius="md"
-          //   p={2}
-          //   spacing={5}
-          //   width="100px"
-          //   height="120px"
-          justifyContent="center"
-          alignItems="center"
-          spacing={1}
-        >
-          {/* Placeholder for shirt (here just the club name) */}
-          {/* Club shirt */}
-          <Image src={ShirtImg} borderRadius="lg" height={45} />
-          <Divider borderColor={"black"} />
-          {/* Player Name */}
-          <Text
-            fontSize="sm"
-            fontWeight="bold"
-            textAlign="center"
-            color="black"
-          >
-            {name}
-          </Text>
-          {/* Points or Opponent */}
-          <Text fontSize="xs" color="grey">
-            {points !== null ? `${points} pts` : `vs ${opponent}`}
-          </Text>
-        </VStack>
-      </CardBody>
-    </Card>
+      <Card
+        width="130px"
+        height="130px"
+        variant={"elevated"}
+        border={"2px solid"}
+        borderRadius={"10px"}
+        borderColor={"black"}
+        bgColor={"white"}
+        _hover={{ transform: "scale(1.05)", transition: "0.2s" }}
+      >
+        <CardBody justifyContent="center" alignItems="center">
+          <VStack justifyContent="center" alignItems="center" spacing={1}>
+            {/* Club shirt */}
+            <Image src={ShirtImg} borderRadius="lg" height={45} />
+            {/* Player Name */}
+            <Text
+              fontSize="sm"
+              fontWeight="bold"
+              textAlign="center"
+              color="black"
+            >
+              {player.name}
+            </Text>
+            {/* Points or Opponent */}
+            <Text fontSize="xs" color="grey">
+              {player.points !== null
+                ? `${player.points} pts`
+                : `vs ${player.opponent}`}
+            </Text>
+          </VStack>
+        </CardBody>
+      </Card>
+    </Tooltip>
   );
 };
 

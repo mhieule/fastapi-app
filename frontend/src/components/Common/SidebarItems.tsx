@@ -9,7 +9,6 @@ import type { UserPublic } from "../../client";
 
 const items = [
   { icon: FiHome, title: "Dashboard", path: "/" },
-  { icon: TbMilitaryRank, title: "Live Points", path: "/live_points" },
   { icon: FaRankingStar, title: "Live Ranking", path: "/live_ranking" },
   { icon: FiBriefcase, title: "Items", path: "/items" },
   { icon: FiSettings, title: "User Settings", path: "/settings" },

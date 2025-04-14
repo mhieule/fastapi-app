@@ -17,10 +17,13 @@ import { Route as RecoverPasswordImport } from './routes/recover-password'
 import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
+import { Route as LayoutTransferPlannerImport } from './routes/_layout/transfer-planner'
+import { Route as LayoutTeamOfTheWeekImport } from './routes/_layout/team-of-the-week'
 import { Route as LayoutSettingsImport } from './routes/_layout/settings'
+import { Route as LayoutOptimizedTeamImport } from './routes/_layout/optimized-team'
 import { Route as LayoutLiverankingImport } from './routes/_layout/live_ranking'
-import { Route as LayoutLivepointsImport } from './routes/_layout/live_points'
 import { Route as LayoutItemsImport } from './routes/_layout/items'
+import { Route as LayoutFeedImport } from './routes/_layout/feed'
 import { Route as LayoutAdminImport } from './routes/_layout/admin'
 
 // Create/Update Routes
@@ -55,8 +58,23 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutTransferPlannerRoute = LayoutTransferPlannerImport.update({
+  path: '/transfer-planner',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutTeamOfTheWeekRoute = LayoutTeamOfTheWeekImport.update({
+  path: '/team-of-the-week',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutSettingsRoute = LayoutSettingsImport.update({
   path: '/settings',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutOptimizedTeamRoute = LayoutOptimizedTeamImport.update({
+  path: '/optimized-team',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -65,13 +83,13 @@ const LayoutLiverankingRoute = LayoutLiverankingImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutLivepointsRoute = LayoutLivepointsImport.update({
-  path: '/live_points',
+const LayoutItemsRoute = LayoutItemsImport.update({
+  path: '/items',
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutItemsRoute = LayoutItemsImport.update({
-  path: '/items',
+const LayoutFeedRoute = LayoutFeedImport.update({
+  path: '/feed',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -108,20 +126,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAdminImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/items': {
-      preLoaderRoute: typeof LayoutItemsImport
+    '/_layout/feed': {
+      preLoaderRoute: typeof LayoutFeedImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/live_points': {
-      preLoaderRoute: typeof LayoutLivepointsImport
+    '/_layout/items': {
+      preLoaderRoute: typeof LayoutItemsImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/live_ranking': {
       preLoaderRoute: typeof LayoutLiverankingImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/optimized-team': {
+      preLoaderRoute: typeof LayoutOptimizedTeamImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/settings': {
       preLoaderRoute: typeof LayoutSettingsImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/team-of-the-week': {
+      preLoaderRoute: typeof LayoutTeamOfTheWeekImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/transfer-planner': {
+      preLoaderRoute: typeof LayoutTransferPlannerImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/': {
@@ -136,10 +166,13 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
     LayoutAdminRoute,
+    LayoutFeedRoute,
     LayoutItemsRoute,
-    LayoutLivepointsRoute,
     LayoutLiverankingRoute,
+    LayoutOptimizedTeamRoute,
     LayoutSettingsRoute,
+    LayoutTeamOfTheWeekRoute,
+    LayoutTransferPlannerRoute,
     LayoutIndexRoute,
   ]),
   LoginRoute,
