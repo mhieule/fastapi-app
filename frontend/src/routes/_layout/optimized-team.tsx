@@ -14,13 +14,11 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  CheckboxGroup,
   Checkbox,
   SimpleGrid,
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Flex,
   Spinner,
   useDisclosure,
@@ -45,8 +43,7 @@ import {
   Td,
 } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
-import { TeamFormation } from "../../components/FPLTeam/TeamFormation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   FaCheckCircle,
@@ -442,7 +439,6 @@ function OptimizedTeam() {
                   as={motion.div}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
                 >
                   <Stack spacing={6}>
                     {/* Summary Stats */}

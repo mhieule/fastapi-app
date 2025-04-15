@@ -12,7 +12,6 @@ import {
   Td,
   Button,
   Flex,
-  Stack,
   HStack,
   VStack,
   Divider,
@@ -25,13 +24,10 @@ import {
   CloseButton,
   InputGroup,
   InputLeftElement,
-  InputRightAddon,
-  FormControl,
-  FormLabel,
 } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { BiTransfer } from "react-icons/bi";
-import { FaArrowUp, FaArrowDown, FaEdit, FaPencilAlt } from "react-icons/fa";
+import { FaArrowUp, FaArrowDown, FaPencilAlt } from "react-icons/fa";
 import { useState } from "react";
 
 export const Route = createFileRoute("/_layout/transfer-planner")({

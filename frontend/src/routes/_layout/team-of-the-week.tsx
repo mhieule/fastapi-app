@@ -3,13 +3,8 @@ import {
   Heading,
   Container,
   Text,
-  Image,
   SimpleGrid,
   Flex,
-  Stat,
-  StatLabel,
-  StatNumber,
-  StatHelpText,
   Card,
   CardBody,
   CardHeader,
@@ -28,13 +23,11 @@ import { teamOfTheWeekData } from "../../data/mockTeamData";
 import {
   FaFutbol,
   FaHandsHelping,
-  FaShieldAlt,
   FaStar,
   FaTrophy,
   FaUsers,
 } from "react-icons/fa";
 import { FiTrendingUp } from "react-icons/fi";
-import { IoMdFootball } from "react-icons/io";
 
 export const Route = createFileRoute("/_layout/team-of-the-week")({
   component: TeamOfTheWeek,

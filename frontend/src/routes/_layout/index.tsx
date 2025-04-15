@@ -6,15 +6,11 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Button,
   Heading,
   Image,
   Flex,
   HStack,
-  List,
-  ListItem,
-  Avatar,
   Input,
   InputGroup,
   InputRightElement,
@@ -22,13 +18,13 @@ import {
 } from "@chakra-ui/react";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import useAuth from "../../hooks/useAuth";
-import { BiLike, BiShare, BiChat, BiSearchAlt } from "react-icons/bi";
+import { BiSearchAlt } from "react-icons/bi";
 import { MdSwapHorizontalCircle } from "react-icons/md";
 import { GiProcessor } from "react-icons/gi";
 import { ImStarHalf } from "react-icons/im";
 import FeedImage from "/assets/images/feed.png";
 import { PlayerCard } from "../../components/FPLTeam/TeamFormation";
-import { dashboardPlayers, Player } from "../../data/mockTeamData";
+import { dashboardPlayers } from "../../data/mockTeamData";
 import { useState } from "react";
 
 export const Route = createFileRoute("/_layout/")({
